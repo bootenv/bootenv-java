@@ -1,0 +1,13 @@
+---
+language: java
+
+jdk:
+  - oraclejdk7
+
+env:
+  - TERM=dumb
+
+sudo: false
+
+after_success:
+  - ./gradlew jacocoTestReport coveralls

@@ -1,8 +1,19 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'com.github.kt3k.coveralls'
 
 sourceCompatibility = 1.7
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+    }
+}
 
 repositories {
     mavenLocal()
@@ -55,4 +66,11 @@ task wrapper(type: Wrapper) {
 jacoco {
     toolVersion = "0.7.1.201405082137"
     reportsDir = file("$buildDir/reports/jacoco")
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
 }
