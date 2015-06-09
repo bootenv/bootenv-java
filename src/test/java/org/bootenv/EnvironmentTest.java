@@ -1,7 +1,9 @@
-package org.bootenv.utility;
+package org.bootenv;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
+import org.bootenv.Environment;
+import org.bootenv.EnvironmentImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,10 +54,10 @@ public final class EnvironmentTest {
     public void testHas() throws Exception {
         replayAll();
 
-        assertTrue(environment.has(KEY1));
-        assertTrue(environment.has(KEY2));
-        assertFalse(environment.has(KEY3));
-        assertFalse(environment.has(KEY4));
+        assertTrue(environment.hasProperty(KEY1));
+        assertTrue(environment.hasProperty(KEY2));
+        assertFalse(environment.hasProperty(KEY3));
+        assertFalse(environment.hasProperty(KEY4));
 
         verifyAll();
     }
@@ -152,10 +154,10 @@ public final class EnvironmentTest {
 
         replayAll();
 
-        assertTrue(environment.has(KEY1));
-        assertTrue(environment.has(KEY2));
-        assertFalse(environment.has(KEY3));
-        assertFalse(environment.has(KEY4));
+        assertTrue(environment.hasProperty(KEY1));
+        assertTrue(environment.hasProperty(KEY2));
+        assertFalse(environment.hasProperty(KEY3));
+        assertFalse(environment.hasProperty(KEY4));
 
         List<String> keys = Lists.newArrayList(environment.getKeys());
         assertEquals(2, keys.size());
