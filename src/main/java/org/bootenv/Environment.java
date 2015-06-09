@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.bootenv.utility;
+package org.bootenv;
 
 import com.google.common.base.Optional;
 
@@ -37,7 +37,7 @@ public interface Environment {
      *
      * @return <tt>true</tt> only if the environment has a property
      */
-    boolean has(String key);
+    boolean hasProperty(String key);
 
     /**
      * Checks if a key is equals to <tt>true</tt> if it's not present will return <tt>false</tt>

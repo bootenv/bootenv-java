@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package org.bootenv.utility;
+package org.bootenv;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
@@ -40,7 +40,7 @@ public class EnvironmentImpl implements Environment {
     }
 
     @Override
-    public boolean has(final String key) {
+    public boolean hasProperty(final String key) {
         LOG.debug("Checking is Environment has the [{}] property...", key);
         Optional<String> property = getOptionalProperty(key);
 

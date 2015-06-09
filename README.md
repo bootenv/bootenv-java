@@ -1,10 +1,10 @@
-# [![>bootenv](http://bootenv.com/img/logo-light-transparent-readme-files.png)](http://bootenv.com)-JAVA-UTILITY
+# [![>bootenv](http://bootenv.com/img/logo-light-transparent-readme-files.png)](http://bootenv.com)-JAVA
 
 [![license](https://img.shields.io/badge/license-Apache_2.0-blue.svg)]()
 [![engine](https://img.shields.io/badge/JDK-v1.7+-yellow.svg)]()
 [![gradle](https://img.shields.io/badge/gradle-v2.4-blue.svg)]()
-[![Build Status](https://travis-ci.org/bootenv/bootenv-java-utility.svg?branch=master)](https://travis-ci.org/bootenv/bootenv-java-utility)
-[![Coverage Status](https://coveralls.io/repos/bootenv/bootenv-java-utility/badge.svg)](https://coveralls.io/r/bootenv/bootenv-java-utility)
+[![Build Status](https://travis-ci.org/bootenv/bootenv-java.svg?branch=master)](https://travis-ci.org/bootenv/bootenv-java)
+[![Coverage Status](https://coveralls.io/repos/bootenv/bootenv-java/badge.svg)](https://coveralls.io/r/bootenv/bootenv-java)
 
 > It’s simple! Java utility methods to make using the environment properties more pleasant. `:wq`
 
