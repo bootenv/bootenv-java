@@ -56,7 +56,7 @@ public class EnvironmentImpl implements Environment {
     }
 
     @Override
-    public boolean supports(final String feature, final boolean defaultValue) {
+    public boolean supportsOr(final String feature, final boolean defaultValue) {
         LOG.debug("Checking is Environment supports the [{}] feature...", feature);
         Optional<String> property = getOptionalProperty(feature);
         if (property.isPresent()) {
@@ -84,11 +84,11 @@ public class EnvironmentImpl implements Environment {
 
     @Override
     public String getProperty(final String key) {
-        return getProperty(key, null);
+        return getPropertyOr(key, null);
     }
 
     @Override
-    public String getProperty(final String key, final String defaultValue) {
+    public String getPropertyOr(final String key, final String defaultValue) {
         Optional<String> property = getOptionalProperty(key);
         if (property.isPresent()) {
             return property.get();

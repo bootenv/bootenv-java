@@ -92,7 +92,7 @@ public class MyClass {
     }
 
     public void sendMail() {
-        if(environment.supports(SEND_EMAIL_PROPERTY, false)) {
+        if(environment.supportsOr(SEND_EMAIL_PROPERTY, false)) {
             Optional<String> address = environment.getOptionalProperty(EMAIL_ADDRESS_PROPERTY);
             if(address.isPresent()){
                 String email = address.get();
@@ -100,7 +100,7 @@ public class MyClass {
                 
                 sender.sendMailTo(email);    
             } else {
-                String email = environment.getProperty(DEFAULT_EMAIL_ADDRESS_PROPERTY, DEFAULT_EMAIL_ADDRESS);
+                String email = environment.getPropertyOr(DEFAULT_EMAIL_ADDRESS_PROPERTY, DEFAULT_EMAIL_ADDRESS);
                 LOG.info("Sending email to default address [{}]...", email);
                 
                 sender.sendMailTo(email);
@@ -111,8 +111,6 @@ public class MyClass {
     }
     
 }
-
-
 ```
 
 In the code above, `environment.getProperty(DEFAULT_EMAIL_ADDRESS_PROPERTY, DEFAULT_EMAIL_ADDRESS)` we will get the property email. But if this property is not always present, the  method returns the default value (`DEFAULT_EMAIL_ADDRESS = "support@bootenv.org"`).

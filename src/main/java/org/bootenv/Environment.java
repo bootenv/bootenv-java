@@ -57,7 +57,7 @@ public interface Environment {
      * otherwise: returns the <tt>defaultValue</tt>
      * @see Environment#supports(String)
      */
-    boolean supports(String feature, boolean defaultValue);
+    boolean supportsOr(String feature, boolean defaultValue);
 
     /**
      * Get a Optional property value according to Environment
@@ -83,10 +83,10 @@ public interface Environment {
      *
      * @param key          The property name
      * @param defaultValue The default value
-     * @return the property value according to Environment Get the property value according to Environment,
+     * @return the property value according to Environment
      * @see Environment#getProperty(String)
      */
-    String getProperty(String key, String defaultValue);
+    String getPropertyOr(String key, String defaultValue);
 
     /**
      * @return an {@link Iterable} with all Environment keys

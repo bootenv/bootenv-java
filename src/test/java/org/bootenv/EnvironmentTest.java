@@ -2,8 +2,6 @@ package org.bootenv;
 
 import com.google.common.base.Optional;
 import com.google.common.collect.Lists;
-import org.bootenv.Environment;
-import org.bootenv.EnvironmentImpl;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,13 +73,13 @@ public final class EnvironmentTest {
     }
 
     @Test
-    public void testSupportsWithDefault() throws Exception {
+    public void testSupportsOr() throws Exception {
         replayAll();
 
-        assertTrue(environment.supports(KEY1, false));
-        assertFalse(environment.supports(KEY2, true));
-        assertTrue(environment.supports(KEY3, true));
-        assertTrue(environment.supports(KEY4, true));
+        assertTrue(environment.supportsOr(KEY1, false));
+        assertFalse(environment.supportsOr(KEY2, true));
+        assertTrue(environment.supportsOr(KEY3, true));
+        assertTrue(environment.supportsOr(KEY4, true));
 
         verifyAll();
     }
@@ -127,19 +125,19 @@ public final class EnvironmentTest {
     }
 
     @Test
-    public void testGetPropertyWithDefault() throws Exception {
+    public void testGetPropertyOr() throws Exception {
         replayAll();
 
-        String property = environment.getProperty(KEY1, DEFAULT_VALUE);
+        String property = environment.getPropertyOr(KEY1, DEFAULT_VALUE);
         assertEquals(VALUE1, property);
 
-        property = environment.getProperty(KEY2, DEFAULT_VALUE);
+        property = environment.getPropertyOr(KEY2, DEFAULT_VALUE);
         assertEquals(VALUE2, property);
 
-        property = environment.getProperty(KEY3, DEFAULT_VALUE);
+        property = environment.getPropertyOr(KEY3, DEFAULT_VALUE);
         assertEquals(DEFAULT_VALUE, property);
 
-        property = environment.getProperty(KEY4, DEFAULT_VALUE);
+        property = environment.getPropertyOr(KEY4, DEFAULT_VALUE);
         assertEquals(DEFAULT_VALUE, property);
 
         verifyAll();
