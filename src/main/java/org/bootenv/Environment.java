@@ -89,6 +89,35 @@ public interface Environment {
     String getPropertyOr(String key, String defaultValue);
 
     /**
+     * Get a Optional property number value according to Environment
+     *
+     * @param key The property name
+     * @return The Optional property number value according to Environment
+     */
+    Optional<Number> getOptionalNumber(String key);
+
+    /**
+     * Get the property number value according to Environment,
+     * use only if you are 100% sure that the environment has a key,
+     * otherwise use {@link Environment#getOptionalNumber(String)}
+     *
+     * @param key The property name
+     * @return the property number value according to Environment, otherwise returns <tt>null<tt>
+     */
+    Number getNumber(String key);
+
+    /**
+     * Get the property number value according to Environment,
+     * if it's not present will return the <tt>defaultValue</tt>
+     *
+     * @param key          The property name
+     * @param defaultValue The default value
+     * @return the property number value according to Environment
+     * @see Environment#getNumber(String)
+     */
+    Number getNumberOr(String key, Number defaultValue);
+
+    /**
      * @return an {@link Iterable} with all Environment keys
      */
     Iterable<String> getKeys();
