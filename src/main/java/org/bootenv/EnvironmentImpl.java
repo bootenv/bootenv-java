@@ -20,6 +20,7 @@ import com.google.common.base.Optional;
 import com.google.common.collect.Iterables;
 import org.slf4j.Logger;
 
+import java.text.NumberFormat;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
@@ -95,6 +96,37 @@ public class EnvironmentImpl implements Environment {
         }
 
         LOG.debug("Environment has no the [{}] property, returning default value [{}]", key, defaultValue);
+        return defaultValue;
+    }
+
+    @Override
+    public Optional<Number> getOptionalNumber(final String key) {
+        Optional<String> property = getOptionalProperty(key);
+        if (property.isPresent()) {
+            String number = property.get();
+            try {
+                return Optional.fromNullable(NumberFormat.getInstance().parse(number));
+            } catch (Exception ex) {
+                LOG.error("Error getting number from string [{}]!", number, ex);
+            }
+        }
+
+        return Optional.absent();
+    }
+
+    @Override
+    public Number getNumber(final String key) {
+        return getNumberOr(key, null);
+    }
+
+    @Override
+    public Number getNumberOr(final String key, final Number defaultValue) {
+        Optional<Number> number = getOptionalNumber(key);
+        if (number.isPresent()) {
+            return number.get();
+        }
+
+        LOG.debug("Environment has no the [{}] property number, returning default value [{}]", key, defaultValue);
         return defaultValue;
     }
 
