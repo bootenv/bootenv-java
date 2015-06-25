@@ -1,6 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'jacoco'
+apply plugin: 'signing'
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
 apply plugin: 'com.github.kt3k.coveralls'
+apply plugin: 'com.jfrog.bintray'
 
 sourceCompatibility = 1.7
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
@@ -8,10 +12,12 @@ sourceCompatibility = 1.7
 buildscript {
     repositories {
         mavenCentral()
+        jcenter()
     }
 
     dependencies {
         classpath 'org.kt3k.gradle.plugin:coveralls-gradle-plugin:2.0.1'
+        classpath 'com.jfrog.bintray.gradle:gradle-bintray-plugin:1.1'
     }
 }
 
@@ -56,8 +62,152 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 }
 
 artifacts {
+    archives jar
     archives sourcesJar
     archives javadocJar
+}
+
+if (signing.signatory) {
+    signing {
+        sign configurations.archives
+    }
+}
+
+publishing {
+    publications {
+        plugin(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+
+            if (signing.signatory) {
+                beforeDeployment {
+                    signing.signPom(it)
+                }
+            }
+
+            repository(url: "https://oss.sonatype.org/service/local/staging/deploy/maven2/") {
+                authentication(userName: "${sonatypeUsername}", password: "${sonatypePassword}")
+            }
+
+            pom.project {
+                name '>Bootenv'
+                packaging 'jar'
+                description 'It’s simple! Java utility methods to make using the environment properties more pleasant. :wq'
+                url 'https://github.com/bootenv/bootenv-java'
+
+                scm {
+                    url 'scm:git@github.com:bootenv/bootenv-java.git'
+                    connection 'scm:git@github.com:bootenv/bootenv-java.git'
+                    developerConnection 'scm:git@github.com:bootenv/bootenv-java.git'
+                }
+
+                licenses {
+                    license {
+                        name 'Apache-2.0 License'
+                        url 'https://raw.githubusercontent.com/bootenv/bootenv-java/master/LICENSE'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'acactown'
+                        name 'Andrés Amado'
+                        email 'acactown@gmail.com'
+                        organization 'Bootenv'
+                    }
+                    developer {
+                        id 'cesarizu'
+                        name 'Cesar Izurieta'
+                        email 'cesar@ecuarock.net'
+                        organization 'Bootenv'
+                    }
+                }
+            }
+        }
+    }
+}
+
+install {
+    repositories {
+        mavenInstaller {
+
+            if (signing.signatory) {
+                beforeDeployment {
+                    signing.signPom(it)
+                }
+            }
+
+            pom.project {
+                name '>Bootenv'
+                packaging 'jar'
+                description 'It’s simple! Java utility methods to make using the environment properties more pleasant. :wq'
+                url 'https://github.com/bootenv/bootenv-java'
+
+                scm {
+                    url 'scm:git@github.com:bootenv/bootenv-java.git'
+                    connection 'scm:git@github.com:bootenv/bootenv-java.git'
+                    developerConnection 'scm:git@github.com:bootenv/bootenv-java.git'
+                }
+
+                licenses {
+                    license {
+                        name 'Apache-2.0 License'
+                        url 'https://raw.githubusercontent.com/bootenv/bootenv-java/master/LICENSE'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'acactown'
+                        name 'Andrés Amado'
+                        email 'acactown@gmail.com'
+                        organization 'Bootenv'
+                    }
+                    developer {
+                        id 'cesarizu'
+                        name 'Cesar Izurieta'
+                        email 'cesar@ecuarock.net'
+                        organization 'Bootenv'
+                    }
+                }
+            }
+        }
+    }
+}
+
+bintray {
+    if (project.hasProperty('bintrayUsername')) {
+        user = "${bintrayUsername}"
+        key = "${bintrayApiKey}"
+    }
+
+    configurations = ['archives']
+
+    pkg {
+        repo = 'maven'
+        name = 'bootenv'
+        userOrg = 'bootenv'
+        desc = 'It’s simple! Java utility methods to make using the environment properties more pleasant. :wq'
+        websiteUrl = 'https://bootenv.com'
+        issueTrackerUrl = 'https://github.com/bootenv/bootenv-java/issues'
+        vcsUrl = 'https://github.com/bootenv/bootenv-java.git'
+        licenses = ['Apache-2.0']
+        labels = ['Environment', 'Utility', 'Configuration', ' Management ']
+        publicDownloadNumbers = true
+        version {
+            name = '1.0.0'
+            vcsTag = 'v1.0.0'
+        }
+    }
+
 }
 
 task wrapper(type: Wrapper) {
